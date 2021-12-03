@@ -928,7 +928,7 @@ parseURL(char *url, ParsedURL *p_url, ParsedURL *current)
 	p_url->host != NULL && *p_url->host != '\0' &&
 	!is_localhost(p_url->host)) {
 	/*
-	 * In the environments other than CYGWIN, a URL like 
+	 * In the environments other than CYGWIN, a URL like
 	 * file://host/file is regarded as ftp://host/file.
 	 * On the other hand, file://host/file on CYGWIN is
 	 * regarded as local access to the file //host/file.
@@ -999,14 +999,14 @@ parseURL(char *url, ParsedURL *p_url, ParsedURL *current)
 	while (*p && *p != '#' && p != cgi)
 	    p++;
 	if (*p == '#' && p_url->scheme == SCM_LOCAL) {
-	    /* 
+	    /*
 	     * According to RFC2396, # means the beginning of
 	     * URI-reference, and # should be escaped.  But,
 	     * if the scheme is SCM_LOCAL, the special
 	     * treatment will apply to # for convinience.
 	     */
 	    if (p > q && *(p - 1) == '/' && (cgi == NULL || p < cgi)) {
-		/* 
+		/*
 		 * # comes as the first character of the file name
 		 * that means, # is not a label but a part of the file
 		 * name.
@@ -1015,7 +1015,7 @@ parseURL(char *url, ParsedURL *p_url, ParsedURL *current)
 		goto again;
 	    }
 	    else if (*(p + 1) == '\0') {
-		/* 
+		/*
 		 * # comes as the last character of the file name that
 		 * means, # is not a label but a part of the file
 		 * name.
@@ -1216,10 +1216,10 @@ parseURL2(char *url, ParsedURL *pu, ParsedURL *current)
 	    ) {
 	    if (relative_uri) {
 		/* In this case, pu->file is created by [process 1] above.
-		 * pu->file may contain relative path (for example, 
+		 * pu->file may contain relative path (for example,
 		 * "/foo/../bar/./baz.html"), cleanupName() must be applied.
 		 * When the entire abs_path is given, it still may contain
-		 * elements like `//', `..' or `.' in the pu->file. It is 
+		 * elements like `//', `..' or `.' in the pu->file. It is
 		 * server's responsibility to canonicalize such path.
 		 */
 		pu->file = cleanupName(pu->file);
@@ -1451,7 +1451,7 @@ otherinfo(ParsedURL *target, ParsedURL *current, char *referer)
 	int cross_origin = FALSE;
 	if (CrossOriginReferer && current && current->host &&
 	    (!target || !target->host ||
-	     strcasecmp(current->host, target->host) != 0 || 
+	     strcasecmp(current->host, target->host) != 0 ||
 	     current->port != target->port ||
 	     current->scheme != target->scheme))
 	    cross_origin = TRUE;
@@ -2135,7 +2135,7 @@ check_no_proxy(char *domain)
     if (!NOproxy_netaddr) {
 	return 0;
     }
-    /* 
+    /*
      * to check noproxy by network addr
      */
     if (SETJMP(AbortLoading) != 0) {
