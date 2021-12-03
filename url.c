@@ -83,7 +83,10 @@ struct cmdtable schemetable[] = {
     {"ftp", SCM_FTP},
     {"local", SCM_LOCAL},
     {"file", SCM_LOCAL},
-    /*  {"exec", SCM_EXEC}, */
+    {"exec", SCM_EXEC},
+    {"prog", SCM_EXEC},
+    {"lynxexec", SCM_EXEC},
+    {"lynxprog", SCM_EXEC},
     {"nntp", SCM_NNTP},
     /*  {"nntp", SCM_NNTP_GROUP}, */
     {"news", SCM_NEWS},
@@ -1082,6 +1085,8 @@ parseURL2(char *url, ParsedURL *pu, ParsedURL *current)
     if (pu->scheme == SCM_MAILTO)
 	return;
 #endif
+    if (pu->scheme == SCM_EXEC)
+	return;
     if (pu->scheme == SCM_DATA)
 	return;
     if (pu->scheme == SCM_NEWS || pu->scheme == SCM_NEWS_GROUP) {
@@ -1295,7 +1300,7 @@ _parsedURL2Str(ParsedURL *pu, int pass, int user, int label)
 	return tmp;
     }
 #endif
-    if (pu->scheme == SCM_DATA) {
+    if (pu->scheme == SCM_DATA || pu->scheme == SCM_EXEC) {
 	Strcat_charp(tmp, pu->file);
 	return tmp;
     }

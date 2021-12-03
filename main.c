@@ -3115,6 +3115,37 @@ handleMailto(char *url)
     return 1;
 }
 
+static int
+handleExec(char *url)
+{
+    int wait = 0;
+    char *cmd;
+
+    if (!strncasecmp(url, "lynx", 4))
+	url += 4;
+
+    if (!strncasecmp(url, "exec:", 5)) {
+	cmd = url + 5;
+	wait = TRUE;
+    } else if (!strncasecmp(url, "prog:", 5)) {
+	cmd = url + 5;
+	wait = FALSE;
+    } else {
+	return 0;
+    }
+
+    fmTerm();
+    system(cmd);
+    if (wait) {
+	printf("Press any key to continue...");
+	getchar();
+    }
+    fmInit();
+    displayBuffer(Currentbuf, B_FORCE_REDRAW);
+    pushHashHist(URLHist, url);
+    return 1;
+}
+
 /* follow HREF link */
 DEFUN(followA, GOTO_LINK, "Follow current hyperlink in a new buffer")
 {
@@ -3163,6 +3194,8 @@ DEFUN(followA, GOTO_LINK, "Follow current hyperlink in a new buffer")
 	}
     }
     if (handleMailto(a->url))
+	return;
+    if (handleExec(a->url))
 	return;
 #if 0
     else if (!strncasecmp(a->url, "news:", 5) && strchr(a->url, '@') == NULL) {
@@ -4198,6 +4231,8 @@ cmd_loadURL(char *url, ParsedURL *current, char *referer, FormList *request)
     Buffer *buf;
 
     if (handleMailto(url))
+	return;
+    if (handleExec(url))
 	return;
 #if 0
     if (!strncasecmp(url, "news:", 5) && strchr(url, '@') == NULL) {
