@@ -2968,8 +2968,8 @@ loadLink(char *url, char *target, char *referer, FormList *request)
     base = baseURL(Currentbuf);
     if ((no_referer_ptr && *no_referer_ptr) ||
 	base == NULL ||
-	base->scheme == SCM_LOCAL || base->scheme == SCM_LOCAL_CGI ||
-	base->scheme == SCM_DATA)
+	base->scheme == SCM_DATA || base->scheme == SCM_EXEC ||
+	base->scheme == SCM_LOCAL || base->scheme == SCM_LOCAL_CGI)
 	referer = NO_REFERER;
     if (referer == NULL)
 	referer = parsedURL2RefererStr(&Currentbuf->currentURL)->ptr;
@@ -4300,8 +4300,8 @@ goURL0(char *prompt, int relative)
 	current = baseURL(Currentbuf);
 	if ((no_referer_ptr && *no_referer_ptr) ||
 	    current == NULL ||
-	    current->scheme == SCM_LOCAL || current->scheme == SCM_LOCAL_CGI ||
-	    current->scheme == SCM_DATA)
+	    current->scheme == SCM_DATA || current->scheme == SCM_EXEC ||
+	    current->scheme == SCM_LOCAL || current->scheme == SCM_LOCAL_CGI)
 	    referer = NO_REFERER;
 	else
 	    referer = parsedURL2RefererStr(&Currentbuf->currentURL)->ptr;

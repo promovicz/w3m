@@ -1466,8 +1466,9 @@ otherinfo(ParsedURL *target, ParsedURL *current, char *referer)
 	}
 	else
 #endif
-	if (referer == NULL && current && current->scheme != SCM_LOCAL &&
-	    current->scheme != SCM_LOCAL_CGI && current->scheme != SCM_DATA &&
+	if (referer == NULL && current &&
+	    current->scheme != SCM_DATA && current->scheme != SCM_EXEC &&
+	    current->scheme != SCM_LOCAL && current->scheme != SCM_LOCAL_CGI &&
 	    (current->scheme != SCM_FTP ||
 	     (current->user == NULL && current->pass == NULL))) {
 	    Strcat_charp(s, "Referer: ");
