@@ -276,6 +276,7 @@ fusage(FILE * f, int err)
     fprintf(f, "    -o opt=value     assign value to config option\n");
     fprintf(f, "    -show-option     print all config options\n");
     fprintf(f, "    -config file     specify config file\n");
+    fprintf(f, "    -exec            enable exec: and prog: URLs\n");
     fprintf(f, "    -debug           use debug mode (only for debugging)\n");
     fprintf(f, "    -reqlog          write request logfile\n");
     fprintf(f, "    -help            print this usage message\n");
@@ -817,6 +818,9 @@ main(int argc, char **argv)
 	    }
 	    else if (!strcmp("-debug", argv[i])) {
 		w3m_debug = TRUE;
+	    }
+	    else if (!strcmp("-exec", argv[i])) {
+	        enable_exec = TRUE;
 	    }
 	    else if (!strcmp("-reqlog",argv[i])) {
 		w3m_reqlog=rcFile("request.log");
@@ -3132,6 +3136,11 @@ handleExec(char *url)
 	wait = FALSE;
     } else {
 	return 0;
+    }
+
+    if (!enable_exec) {
+        disp_err_message("exec not enabled", TRUE);
+	return 1;
     }
 
     fmTerm();
