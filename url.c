@@ -1696,7 +1696,7 @@ openURL(char *url, ParsedURL *pu, ParsedURL *current,
 						    request, option->referer),
 				      (void (*)())fclose);
 	else
-	    /* lodal CGI: GET */
+	    /* local CGI: GET */
 	    uf.stream = newFileStream(localcgi_get(pu->real_file, pu->query,
 						   option->referer),
 				      (void (*)())fclose);
